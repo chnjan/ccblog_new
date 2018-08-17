@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chnjan.ccblog.main.dao.BlogDao">
+	<resultMap type="com.chnjan.ccblog.main.domain.Blog" id="rmBlog">
+		<id column="blogid" property="blogId"/>
+		<result column="typeid" property="typeid"/>
+		<result column="userurl" property="userUrl"/>
+		<result column="title" property="title"/>
+		<result column="content" property="content"/>
+		<result column="abstract" property="blogAbstract"/>
+		<result column="createtime" property="createTime"/>
+		<result column="lastupdatetime" property="lastUpdateTime"/>
+		<result column="readcount" property="readCount"/>
+		<result column="commentcount" property="commentCount"/>
+		<result column="upupcount" property="upupCount"/>
+	</resultMap>
+	
+	<insert parameterType="com.chnjan.ccblog.main.domain.Blog" id="addBlog">
+		insert into t_main_blog (blogid,
+								typeid,
+								userurl,
+						    	title,
+						    	content,
+						    	abstract,
+						    	createtime,
+						    	lastupdatetime
+						    	)
+						values (#{blogId},
+								#{typeid},
+						    	#{userUrl},
+								#{title},
+						    	#{content},
+						    	#{blogAbstract},
+						    	sysdate(),
+						    	sysdate()
+						    	)
+	</insert>
+	
+	<select id="queryBlogById" parameterType="String" resultType="com.chnjan.ccblog.main.domain.Blog">
+	 	select 
+	 		blogid,typeid,userurl,title,content,
+	 		abstract blogAbstract,createtime,lastupdatetime,readcount,commentcount,upupcount
+	 	from 
+	 		t_main_blog 
+	 	where 
+	 		blogId = #{blogId}
+	</select>
+	
+	<delete id="deleteBlogById" parameterType="String">
+		delete from t_main_blog where blogid = #{blogId}
+	</delete>
+	
+	<update id="updateBlog" parameterType="com.chnjan.ccblog.main.domain.Blog">
+		update 
+			t_main_blog set
+			typeid = #{typeid},
+			title = #{title},
+		    content = #{content},
+		    abstract = #{blogAbstract},
+		    lastupdatetime = sysdate()
+		where 
+			blogId = #{blogId}
+	</update>
+	
+	<!-- 首页展示博客列表查询 -->
+	<select id="queryBlogList" resultType="com.chnjan.ccblog.main.domain.Blog">
+	 	SELECT 
+	 		t.blogid,t.typeid,t.userurl,t.title,t.content,t.abstract blogAbstract,
+	 		t.createtime,t.lastupdatetime,t.readcount,t.commentcount,t.upupcount
+		FROM
+			t_main_blog AS t
+		ORDER BY
+			t.createtime DESC
+	</select>
+	
+	<!-- 通过userUrl查询所有blog的数量 -->
+	<select id="queryBlogCountByUrl" parameterType="String" resultType="int">
+		SELECT 
+			COUNT(*) count
+		FROM 
+			t_main_blog t
+		WHERE 
+			t.userurl = #{userUrl}
+	</select>
+	
+	<!-- 通过用户id查询所有blog信息，带分页 -->
+	<select id="queryBlogListByUid" resultType="com.chnjan.ccblog.main.domain.Blog" >
+		SELECT 
+			t.blogid,t.typeid,t.userurl,t.title,t.content,
+	 		t.abstract blogAbstract,t.createtime,t.lastupdatetime,
+	 		t.readcount,t.commentcount,t.upupcount
+		FROM
+			t_main_blog AS t
+		WHERE 
+			t.userurl = #{userUrl}
+		ORDER BY
+			t.createtime DESC
+		LIMIT 
+			#{page.start},#{page.pageSize}
+	</select>
+	
+	<!-- 查询指定分类下blog的数量 -->
+	<select id="queryBlogCountByTypeid" parameterType="String" resultType="int">
+		SELECT 
+			COUNT(*) count
+		FROM 
+			t_main_blog t
+		WHERE 
+			t.typeid = #{typeId}
+	</select>
+	
+	<!-- 通过用户id查询所有blog信息，带分页 -->
+	<select id="queryBlogListByTypeid" resultType="com.chnjan.ccblog.main.domain.Blog" >
+		SELECT 
+			t.blogid,t.typeid,t.userurl,t.title,t.content,
+	 		t.abstract blogAbstract,t.createtime,t.lastupdatetime,
+	 		t.readcount,t.commentcount,t.upupcount
+		FROM
+			t_main_blog AS t
+		WHERE 
+			t.typeid = #{typeId}
+		ORDER BY
+			t.createtime DESC
+		LIMIT 
+			#{page.start},#{page.pageSize}
+	</select>
+	
+	<!-- 通过userUrl查询默认分类下所有blog的数量 -->
+	<select id="queryDefaulttypeBlogCount" parameterType="String" resultType="int">
+		SELECT 
+			COUNT(*) count
+		FROM 
+			t_main_blog t
+		WHERE 
+			t.userurl = #{userUrl}
+		AND
+			t.typeid not in 
+				(select 
+					t1.typeid 
+				 from 
+					t_main_blogtype t1 
+				 where 
+					t1.userurl = t.userurl)
+	</select>
+	
+	<!-- 通过用户id查询默认分类下所有blog信息，带分页 -->
+	<select id="queryDefaulttypeBlogList" resultType="com.chnjan.ccblog.main.domain.Blog" >
+		SELECT 
+			t.blogid,t.typeid,t.userurl,t.title,t.content,
+	 		t.abstract blogAbstract,t.createtime,t.lastupdatetime,
+	 		t.readcount,t.commentcount,t.upupcount
+		FROM
+			t_main_blog AS t
+		WHERE 
+			t.userurl = #{userUrl}
+		AND
+			t.typeid not in 
+				(select 
+					t1.typeid 
+				 from 
+					t_main_blogtype t1 
+				 where 
+					t1.userurl = t.userurl)
+		ORDER BY
+			t.createtime DESC
+		LIMIT 
+			#{page.start},#{page.pageSize}
+	</select>
+	
+</mapper>

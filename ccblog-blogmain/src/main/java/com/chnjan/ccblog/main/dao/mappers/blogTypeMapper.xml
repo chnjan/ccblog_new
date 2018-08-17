@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chnjan.ccblog.main.dao.BlogTypeDao">
+	<resultMap type="com.chnjan.ccblog.main.domain.BlogType" id="rmBlogType">
+		<id column="typeid" property="typeId"/>
+		<result column="typename" property="typeName"/>
+		<result column="userurl" property="userUrl"/>
+		<result column="blogcount" property="blogCount"/>
+	</resultMap>
+	
+	<!-- 通过url查询blogtype -->
+	<select id="queryBlogTypesByUserurl" parameterType="String" resultMap="rmBlogType">
+	 	SELECT 
+	 		t.typeid,t.typename,t.userurl,t.blogcount
+		FROM 
+			t_main_blogtype t
+		WHERE 	
+			t.userurl=#{uurl}
+	</select>
+	
+	<!-- 通过url查询blogtype -->
+	<select id="queryBlogTypesByTypeId" parameterType="String" resultMap="rmBlogType">
+	 	SELECT 
+	 		t.typeid,t.typename,t.userurl,t.blogcount
+		FROM 
+			t_main_blogtype t
+		WHERE 	
+			t.typeid=#{typeId}
+	</select>
+	
+</mapper>

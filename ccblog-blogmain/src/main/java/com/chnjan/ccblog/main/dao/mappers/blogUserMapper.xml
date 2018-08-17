@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chnjan.ccblog.main.dao.BlogUserDao">
+	<resultMap type="com.chnjan.ccblog.main.domain.BlogUser" id="rmBlogUser">
+		<id column="userid" property="userId"/>
+		<result column="nickname" property="nickName"/>
+		<result column="userurl" property="userUrl"/>
+		<result column="saysome" property="saySome"/>
+		<result column="blogcount" property="blogCount"/>
+		<result column="commentcount" property="commentCount"/>
+		<result column="createtime" property="createTime"/>
+	</resultMap>
+	
+	<!-- 通过url查询用户 -->
+	<select id="queryBlogUserByUrl" parameterType="String" resultMap="rmBlogUser">
+	 	SELECT 
+	 		t.userid,t.nickname,t.userurl,t.saysome,t.blogcount,t.commentcount,t.createtime
+		FROM 
+			t_main_bloguser t
+		WHERE 	
+			t.userurl=#{url}
+	</select>
+	
+	<!-- 通过用户id查询 -->
+	<select id="queryBlogUserByUid" parameterType="String" resultMap="rmBlogUser">
+	 	SELECT 
+	 		t.userid,t.nickname,t.userurl,t.saysome,t.blogcount,t.commentcount,t.createtime
+		FROM 
+			t_main_bloguser t
+		WHERE 	
+			t.userid=#{uid}
+	</select>
+	
+	
+</mapper>
