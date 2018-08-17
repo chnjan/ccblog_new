@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="ehcache.xsd"
+         dynamicConfig="true">
+	 <!--
+    The following properties are translated:
+    * user.home - User's home directory
+    * user.dir - User's current working directory
+    * java.io.tmpdir - Default temp file path
+    * ehcache.disk.store.dir - A system property you would normally specify on the command line
+      e.g. java -Dehcache.disk.store.dir=/u01/myapp/diskdir ...
+
+    Subdirectories can be specified below the property e.g. java.io.tmpdir/one
+    -->
+    <diskStore path="java.io.tmpdir/ehcache"/>
+    
+	<!--    
+		eternal ：设置缓存中对象是否为永久的，如果是，超时设置将被忽略，对象从不过期。根据存储数据的不同，例如一些静态不变的数据如省市区等可以设置为永不过时
+		timeToIdleSeconds ： 设置对象闲置时间（如果设定时间内没有被查询过，就清除）（单位：秒）。仅当eternal=false对象不是永久有效时使用，可选属性，默认值是0，也就是可闲置时间无穷大。
+		timeToLiveSeconds ：缓存数据的生存时间（TTL），也就是一个元素从构建到消亡的最大时间，这只能在元素不是永久驻留时有效，如果该值是0就意味着元素可以停顿无穷长的时间。
+		overflowToDisk ：内存不足时，是否启用磁盘缓存
+     -->
+    <defaultCache
+           maxEntriesLocalHeap="0"
+           eternal="false"
+           timeToIdleSeconds="3600"
+           timeToLiveSeconds="3600">
+    
+    </defaultCache>
+    
+    <!-- 
+    	maxEntriesLocalHeap：内存中最大元素个数
+    	maxEntriesLocalDisk：硬盘中最大元素个数
+    	memoryStoreEvictionPolicy：内存元素满了时的清除策略，LFU较少使用，LRU最近较少使用，FIFO先进先出
+     -->
+    <cache name="currentUser"
+           maxEntriesLocalHeap="10000"
+           maxEntriesLocalDisk="1000"
+           eternal="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="0"
+           memoryStoreEvictionPolicy="LFU">
+    </cache>
+</ehcache>

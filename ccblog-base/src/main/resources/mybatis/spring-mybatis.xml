@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- mybatits与spring集成配置 -->
+
+    <context:property-placeholder location="classpath:properties/jdbc.properties"/>
+
+	
+	<!-- c3p0连接池 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${jdbc.main.driver}"/>
+		<property name="jdbcUrl" value="${jdbc.main.url}"/>
+		<property name="user" value="${jdbc.main.username}"/>
+		<property name="password" value="${jdbc.main.password}"/>
+		
+		<!--初始化时获取10个连接，取值应在minPoolSize与maxPoolSize之间。 -->
+        <property name="initialPoolSize" value="12"></property>
+        <!--连接池中保留的最小连接数。 -->
+        <property name="minPoolSize" value="10"></property>
+        <!--连接池中保留的最大连接数。 -->
+        <property name="maxPoolSize" value="100"></property>
+        <!--当连接池中的连接耗尽的时候c3p0一次同时获取的连接数。 -->
+        <property name="acquireIncrement" value="10"></property>
+        <!--最大空闲时间,3600秒内未使用则连接被丢弃。若为0则永不丢弃。Default: 0 -->
+        <property name="maxIdleTime" value="3600"></property>
+		
+	</bean>
+	
+	<!-- 配置mybatis sqlSessionFactory-->
+	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="configLocation" value="classpath:mybatis/mybatis-config.xml"/>
+		<!-- <property name="mapperLocations" value="classpath:com/chnjan/ccblog/main/dao/mappers/*.xml"/> -->
+		<property name="mapperLocations">
+			<array>
+				<value>classpath:com/chnjan/ccblog/base/dao/mappers/*.xml</value>
+			</array>
+		</property>
+	</bean>
+	
+	
+	<!-- 配置扫描的dao接口代理bean针对包 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">  
+        <!-- 这里的basePackage 指定了dao层接口路径，这里的dao接口不用自己实现   -->
+        <property name="basePackage" value="com.chnjan.ccblog.base.dao" />
+        <!-- <property name="basePackage" value="com.chnjan.ccblog.main.dao
+        									,com.chnjan.ccblog.auth.dao" /> -->
+        <!-- 如果只有一个数据源的话可以不用指定，但是如果有多个数据源的话必须要指定  --> 
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryBean" /> 
+       	<!-- 直接指定了sqlsessionTemplate名称，这个和上面的其实是一样的   -->
+        <!-- <property name="sqlSessionTemplateBeanName" value="sqlSession" /> --> 
+    </bean>
+    
+	
+</beans>

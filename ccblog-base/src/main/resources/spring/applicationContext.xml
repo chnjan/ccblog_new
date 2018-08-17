@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.chnjan.ccblog.base.service.impl"></context:component-scan>
+    <!-- <context:component-scan base-package="com.chnjan.ccblog.auth.service.impl"></context:component-scan> -->
+	
+	
+	<!-- ehcache缓存 -->
+	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+		<property name="configLocation" value="classpath:cache/ehcache.xml"/>
+	</bean>
+	<!-- 保存用户登录信息的缓存 -->
+	<bean id="userCache" class="org.springframework.cache.ehcache.EhCacheFactoryBean">
+	   <property name="cacheName" value="currentUser"/>
+	   <property name="cacheManager" ref="cacheManager"/>
+	</bean>
+	
+	<bean id="currentUserCache" class="com.chnjan.ccblog.pub.cache.ehcache.EhcacheCurrentUserImpl">
+	   <property name="userCache" ref="userCache"/>
+	</bean>
+	
+</beans>

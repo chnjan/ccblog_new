@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chnjan.ccblog.base.dao.UserSessionDao">
+	
+	<!-- 通过token查询用户的会话信息 -->
+	<select id="queryUserSessionByToken" parameterType="String" resultType="com.chnjan.ccblog.base.domain.UserSession"
+				useCache="false">
+	 	<![CDATA[
+	 	SELECT 
+			t.uid,t.token,t.logintime
+		FROM 
+			t_base_loginsession t
+		WHERE 
+			t.token=#{token}
+		AND
+			t.logintime > DATE_ADD(SYSDATE(),INTERVAL -#{effectminute} MINUTE)
+		AND
+			t.logintime < SYSDATE()
+		]]>
+	</select>
+	
+	<!-- 新增 -->
+	<insert id="addUserSession" parameterType="com.chnjan.ccblog.base.domain.UserSession" flushCache="true">
+		INSERT INTO	t_base_loginsession
+			(uid,token,logintime)
+		VALUES
+			(#{uid},#{token},SYSDATE())
+	</insert>
+	
+	<!-- 通过token更新时间 -->
+	<update id="updateLoginTime" parameterType="String">
+		UPDATE
+			t_base_loginsession t
+		SET
+			t.logintime = SYSDATE()
+		WHERE
+			t.token = #{token}
+	</update>
+	
+</mapper>

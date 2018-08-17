@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chnjan.ccblog.base.dao.UserInfoDao">
+	<resultMap type="com.chnjan.ccblog.base.domain.UserInfo" id="rmUserInfo">
+		<id column="userid" property="userId"/>
+		<result column="loginaccount" property="loginAccount"/>
+		<result column="username" property="userName"/>
+		<result column="rigisttime" property="rigisttime"/>
+		<result column="lastlogintime" property="lastlogintime"/>
+		<result column="email" property="email"/>
+		<result column="phone" property="phone"/>
+		<result column="qq" property="qq"/>
+	</resultMap>
+	
+	<!-- 通过用户id查询用户的基本信息 -->
+	<select id="queryUserInfoById" parameterType="String" resultMap="rmUserInfo">
+	 	SELECT 
+	 		t.userid,t.loginaccount,t.username,t.rigisttime,t.lastlogintime,t.email,t.phone,t.qq
+		FROM 
+			t_base_userinfo t
+		WHERE 
+			t.userid=#{userId}
+		
+	</select>
+	
+	<!-- 通过用户账号查询用户的基本信息 -->
+	<select id="queryUserInfoByAccount" parameterType="String" resultMap="rmUserInfo">
+	 	SELECT 
+	 		t.userid,t.loginaccount,t.username,t.rigisttime,t.lastlogintime,t.email,t.phone,t.qq
+		FROM 
+			t_base_userinfo t
+		WHERE 
+			t.loginaccount=#{loginaccount}
+		
+	</select>
+	
+	<!-- 通过用户id查询密码 -->
+	<select id="queryUserPwdById" parameterType="String" resultType="String">
+	 	SELECT 
+	 		t.password
+		FROM 
+			t_base_userpwd t
+		WHERE 	
+			t.userid=#{userId}
+	</select>
+	
+</mapper>
