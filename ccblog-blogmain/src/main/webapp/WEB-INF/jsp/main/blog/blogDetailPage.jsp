@@ -109,10 +109,10 @@
 				<div class="feedbackManage">
 					&nbsp;&nbsp;<span class="comment_actions"></span>
 				</div>
-				<a class="layer" href="#3872094">#1楼</a><a name="3872094" id="comment_anchor_3872094"></a>  <span class="comment_date">2017-12-23 08:16</span> <a id="a_comment_author_3872094" href="http://www.cnblogs.com/xuanbg/" target="_blank">xuanbg</a> <a title="发送站内短消息" class="sendMsg2This" href="http://msg.cnblogs.com/send/xuanbg">&nbsp;</a>
+				<a class="layer" href="#3872094">#1楼</a><a name="3872094" id="comment_anchor_3872094"></a>  <span class="comment_date">2017-12-23 08:16</span> <a id="a_comment_author_3872094" target="_blank">xuanbgg</a> <a title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
 			</div>
 			<div class="feedbackCon">
-				<div class="blog_comment_body" id="comment_body_3872094">最主要的是人不一样</div><div class="comment_vote"><a class="comment_digg" onclick="return voteComment(3872094,'Digg',this)" href="javascript:void(0);">支持(0)</a><a class="comment_bury" onclick="return voteComment(3872094,'Bury',this)" href="javascript:void(0);">反对(0)</a></div>
+				<div class="blog_comment_body" id="comment_body_3872094">点赞</div><div class="comment_vote"><a class="comment_digg" onclick="return voteComment(3872094,'Digg',this)" href="javascript:void(0);">支持(0)</a><a class="comment_bury" onclick="return voteComment(3872094,'Bury',this)" href="javascript:void(0);">反对(0)</a></div>
 			</div>
 		</div>
 	
@@ -121,10 +121,10 @@
 				<div class="feedbackManage">
 					&nbsp;&nbsp;<span class="comment_actions"></span>
 				</div>
-				<a class="layer" href="#3872110">#2楼</a><a name="3872110" id="comment_anchor_3872110"></a>  <span class="comment_date">2017-12-23 09:04</span> <a id="a_comment_author_3872110" href="http://www.cnblogs.com/netxiaohui/" target="_blank">—阿辉</a> <a title="发送站内短消息" class="sendMsg2This" href="http://msg.cnblogs.com/send/%E2%80%94%E9%98%BF%E8%BE%89">&nbsp;</a>
+				<a class="layer" href="#3872110">#2楼</a><a name="3872110" id="comment_anchor_3872110"></a>  <span class="comment_date">2017-12-23 09:04</span> <a id="a_comment_author_3872110" target="_blank">阿辉</a> <a title="发送站内短消息" class="sendMsg2This" >&nbsp;</a>
 			</div>
 			<div class="feedbackCon">
-				<div class="blog_comment_body" id="comment_body_3872110">氛围，环境</div><div class="comment_vote"><a class="comment_digg" onclick="return voteComment(3872110,'Digg',this)" href="javascript:void(0);">支持(0)</a><a class="comment_bury" onclick="return voteComment(3872110,'Bury',this)" href="javascript:void(0);">反对(0)</a></div><span id="comment_3872110_avatar" style="display: none;">http://pic.cnblogs.com/face/679140/20141128195543.png</span>
+				<div class="blog_comment_body" id="comment_body_3872110">氛围，环境</div><div class="comment_vote"><a class="comment_digg" onclick="return voteComment(3872110,'Digg',this)" href="javascript:void(0);">支持(0)</a><a class="comment_bury" onclick="return voteComment(3872110,'Bury',this)" href="javascript:void(0);">反对(0)</a></div>
 			</div>
 		</div>
 	
