@@ -103,30 +103,28 @@
 		<div id="comments_pager_top"></div><br>
 		<div class="feedback_area_title">评论列表</div>
 		<div class="feedbackNoItems"></div>	
-
+		
+		<c:forEach var="comment" items="${blogcomments }" varStatus="status">
 		<div class="feedbackItem">
 			<div class="feedbackListSubtitle">
 				<div class="feedbackManage">
 					&nbsp;&nbsp;<span class="comment_actions"></span>
 				</div>
-				<a class="layer" href="#3872094">#1楼</a><a name="3872094" id="comment_anchor_3872094"></a>  <span class="comment_date">2017-12-23 08:16</span> <a id="a_comment_author_3872094" target="_blank">xuanbgg</a> <a title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
+				<a class="layer" href="javascript:void(0);">${status.index + 1}楼</a>
+				<a name="${comment.commentId }" id="${comment.commentId }"></a>
+				<span class="comment_date"><fmt:formatDate value="${comment.createtime }" pattern="yyyy-MM-dd HH:mm"/></span>
+				<a id="a_comment_author_" target="_blank">${comment.nickName}</a>
+				<a title="发送站内短消息" class="sendMsg2This">&nbsp;</a>
 			</div>
 			<div class="feedbackCon">
-				<div class="blog_comment_body" id="comment_body_3872094">点赞</div><div class="comment_vote"><a class="comment_digg" onclick="return voteComment(3872094,'Digg',this)" href="javascript:void(0);">支持(0)</a><a class="comment_bury" onclick="return voteComment(3872094,'Bury',this)" href="javascript:void(0);">反对(0)</a></div>
-			</div>
-		</div>
-	
-		<div class="feedbackItem">
-			<div class="feedbackListSubtitle">
-				<div class="feedbackManage">
-					&nbsp;&nbsp;<span class="comment_actions"></span>
+				<div class="blog_comment_body" id="comment_body_${comment.commentId }">${comment.content}</div>
+				<div class="comment_vote">
+					<a class="comment_digg" onclick="return voteComment(${comment.commentId },'Digg',this)" href="javascript:void(0);">支持(${comment.supportcount })</a>
+					<a class="comment_bury" onclick="return voteComment(${comment.commentId },'Bury',this)" href="javascript:void(0);">反对(${comment.againstcount })</a>
 				</div>
-				<a class="layer" href="#3872110">#2楼</a><a name="3872110" id="comment_anchor_3872110"></a>  <span class="comment_date">2017-12-23 09:04</span> <a id="a_comment_author_3872110" target="_blank">阿辉</a> <a title="发送站内短消息" class="sendMsg2This" >&nbsp;</a>
-			</div>
-			<div class="feedbackCon">
-				<div class="blog_comment_body" id="comment_body_3872110">氛围，环境</div><div class="comment_vote"><a class="comment_digg" onclick="return voteComment(3872110,'Digg',this)" href="javascript:void(0);">支持(0)</a><a class="comment_bury" onclick="return voteComment(3872110,'Bury',this)" href="javascript:void(0);">反对(0)</a></div>
 			</div>
 		</div>
+		</c:forEach>
 	
 	
 		<div id="comments_pager_bottom"></div>

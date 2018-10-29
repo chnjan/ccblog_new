@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chnjan.ccblog.main.dao.BlogCommentDao">
+	<resultMap type="com.chnjan.ccblog.main.domain.BlogComment" id="rmBlogComment">
+		<id column="commentid" property="commentId"/>
+		<result column="supperCommentId" property="supperCommentId"/>
+		<result column="blogId" property="blogId"/>
+		<result column="userurl" property="userUrl"/>
+		<result column="createtime" property="createtime"/>
+		<result column="content" property="content"/>
+		<result column="isdisplay" property="isdisplay"/>
+		<result column="level" property="level"/>
+		<result column="supportcount" property="supportcount"/>
+		<result column="againstcount" property="againstcount"/>
+	</resultMap>
+	
+	<!-- 通过blogId查询评论 -->
+	<select id="queryCommetList" parameterType="String" resultMap="rmBlogComment">
+	 	SELECT 
+			t.commentid,t.suppercommentid,t.blogid,t.userurl,
+			t.createtime,t.content,t.supportcount,t.againstcount
+		FROM 
+			t_main_blogcomment t
+		WHERE 	
+			t.blogid = #{blogId}
+		AND
+			t.isdisplay = '1'
+		ORDER BY
+			t.supportcount - t.againstcount
+		DESC
+	</select>
+	
+</mapper>
