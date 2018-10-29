@@ -17,8 +17,10 @@ import com.chnjan.ccblog.pub.random.IdGenerate;
 import com.chnjan.ccblog.pub.page.Pagination;
 import com.chnjan.ccblog.pub.htmltools.HtmlTool;
 import com.chnjan.ccblog.main.domain.Blog;
+import com.chnjan.ccblog.main.domain.BlogComment;
 import com.chnjan.ccblog.main.domain.BlogType;
 import com.chnjan.ccblog.main.domain.BlogUser;
+import com.chnjan.ccblog.main.service.BlogCommentService;
 import com.chnjan.ccblog.main.service.BlogService;
 import com.chnjan.ccblog.main.service.BlogTypeService;
 import com.chnjan.ccblog.main.service.BlogUserService;
@@ -39,6 +41,9 @@ public class BlogController{
 	
 	@Autowired
 	private BlogTypeService blogTypeService;
+	
+	@Autowired
+	private BlogCommentService blogCommentService;
 	
 	private Pagination page;
 	//分页查询时每页的数量
@@ -153,6 +158,14 @@ public class BlogController{
 			blogType.setUserUrl(userUrl);
 		}
 		
+		//查询评论列表
+		List<BlogComment> comments = blogCommentService.getBlogCommentsByBlogId(blogId);
+		//查询评论人的昵称
+		for (BlogComment blogComment : comments) {
+			BlogUser commentUser = blogUserService.queryBlogUserByUrl(blogComment.getUserUrl());
+			blogComment.setNickName(commentUser.getNickName());
+		}
+		
 		//blog详情页面
 		mav.setViewName("main/blog/blogDetailPage");
 		
@@ -160,6 +173,8 @@ public class BlogController{
 		mav.addObject("userBlog", blog);
 		//分类信息
 		mav.addObject("blogType", blogType);
+		//评论信息
+		mav.addObject("blogcomments", comments);
 		
 		return mav;
 	}
